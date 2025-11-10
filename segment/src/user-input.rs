@@ -9,7 +9,7 @@ fn main() {
         .expect("Failed to read line");
 
     let trimmed_input = userinput.trim();
-    println!("You entered: {}", trimmed_input);
+    println!("You entered: -- {} --", trimmed_input);
 
 
     // Without clear, data is kept appended.
@@ -19,7 +19,7 @@ fn main() {
         .read_line(&mut userinput)
         .expect("Failed to read line");
     let tr2 = userinput.trim();
-    println!("You entered: {}", tr2);
+    println!("You entered: -- {} --", tr2);
 
 
     // So, we need clear
@@ -30,5 +30,5 @@ fn main() {
         .read_line(&mut userinput)
         .expect("Failed to read line");
     let tr3 = userinput.trim();
-    println!("You entered: {}", tr3);
+    println!("You entered: -- {} --", tr3);
 }
