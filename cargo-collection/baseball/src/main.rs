@@ -5,24 +5,18 @@ use std::io;
 
 fn main() {
     println!("--- Number Guessing Game Setup ---");
-    println!("The secret number is a 3-digit number with unique digits (1-9).");
-    println!("Please enter your 3-digit guess now:");
 
-    let mut guess = String::new();
+    let com_num = guess_lib::generate_unique_digits();
+    let mut userinput = String::new();
 
-    // Read input from the user
-    io::stdin().read_line(&mut guess)
-        .expect("Failed to read input line.");
-
-    // Trim whitespace and the newline character
-    let guess = guess.trim();
-
-    // Check validity using the function from our module
-    if guess_lib::is_valid_guess(guess) {
-        println!("\n✅ Your guess '{guess}' is VALID and follows the rules. Great!");
-        println!("(Now we'd check for hits and strikes... but that's the next step!)");
-    } else {
-        println!("\n❌ Your guess '{guess}' is INVALID.");
-        println!("Reminder: Input must be 3 unique digits, each from 1-9.");
+    while ! guess_lib::is_valid_guess(userinput.trim()) {
+        userinput.clear();
+        println!("Please enter a 3-digit number:");
+        io::stdin()
+            .read_line(&mut userinput)
+            .expect("Failed to read line");
     }
+
+    println!("Nice: {}", userinput.trim());
+    println!("Generated number: {:?}", com_num);
 }
