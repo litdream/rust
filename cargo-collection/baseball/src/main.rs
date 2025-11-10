@@ -2,14 +2,15 @@
 mod guess_lib;
 
 use std::io;
+use guess_lib::{generate_unique_digits, is_valid_guess, string_to_digit_vec};
 
 fn main() {
     println!("--- Number Guessing Game Setup ---");
 
-    let com_num = guess_lib::generate_unique_digits();
+    let com_num = generate_unique_digits();
     let mut userinput = String::new();
 
-    while ! guess_lib::is_valid_guess(userinput.trim()) {
+    while ! is_valid_guess(userinput.trim()) {
         userinput.clear();
         println!("Please enter a 3-digit number:");
         io::stdin()
@@ -17,7 +18,7 @@ fn main() {
             .expect("Failed to read line");
     }
 
-    let userinput_vec = guess_lib::string_to_digit_vec(userinput.trim());
+    let userinput_vec = string_to_digit_vec(userinput.trim());
 
     println!("Nice: {:?}", userinput_vec );
     println!("Generated number: {:?}", com_num);
