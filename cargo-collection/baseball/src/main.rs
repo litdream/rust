@@ -17,6 +17,8 @@ fn main() {
             .expect("Failed to read line");
     }
 
-    println!("Nice: {}", userinput.trim());
+    let userinput_vec = guess_lib::string_to_digit_vec(userinput.trim());
+
+    println!("Nice: {:?}", userinput_vec );
     println!("Generated number: {:?}", com_num);
 }
