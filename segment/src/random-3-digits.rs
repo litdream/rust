@@ -12,9 +12,9 @@ use rand::thread_rng;
 /// 1. Create a source vector [1, 2, ..., 9].
 /// 2. Shuffle the vector randomly.
 /// 3. Take the first 3 elements (a slice of [0..3]).
-fn generate_unique_digits() -> Vec<u8> {
+fn generate_unique_digits() -> Vec<u32> {
     // 1. Create the source vector of digits from 1 to 9.
-    let mut digits: Vec<u8> = (1..=9).collect();
+    let mut digits: Vec<u32> = (1..=9).collect();
     // 
 
     // Get a thread-local random number generator (RNG).
@@ -23,8 +23,8 @@ fn generate_unique_digits() -> Vec<u8> {
     // 2. Shuffle the vector randomly.
     digits.shuffle(&mut rng);
 
-    // 3. Take a slice of the first 3 elements and convert it back to a Vec<u8>.
-    // Using digits[0..3] creates a slice (&[u8]), which is then cloned into a new Vec.
+    // 3. Take a slice of the first 3 elements and convert it back to a Vec<u32>.
+    // Using digits[0..3] creates a slice (&[u32]), which is then cloned into a new Vec.
     digits[0..3].to_vec()
 }
 

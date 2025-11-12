@@ -3,6 +3,11 @@ use std::collections::HashSet;
 use rand::seq::SliceRandom;
 use rand::thread_rng;
 
+// NOTE:  I use <u32> instead of <u8>
+//   - 4 byte integer is common type returning from stdlib.  
+//   - wasting a little bit of memory, to reduce conversion down (u32->u8)
+//
+
 
 /// Checks if a 3-digit string number is valid for the guessing game.
 ///
@@ -50,9 +55,9 @@ pub fn is_valid_guess(s: &str) -> bool {
 /// 1. Create a source vector [1, 2, ..., 9].
 /// 2. Shuffle the vector randomly.
 /// 3. Take the first 3 elements (a slice of [0..3]).
-pub fn generate_unique_digits() -> Vec<u8> {
+pub fn generate_unique_digits() -> Vec<u32> {
     // 1. Create the source vector of digits from 1 to 9.
-    let mut digits: Vec<u8> = (1..=9).collect();
+    let mut digits: Vec<u32> = (1..=9).collect();
     // 
 
     // Get a thread-local random number generator (RNG).
@@ -61,12 +66,12 @@ pub fn generate_unique_digits() -> Vec<u8> {
     // 2. Shuffle the vector randomly.
     digits.shuffle(&mut rng);
 
-    // 3. Take a slice of the first 3 elements and convert it back to a Vec<u8>.
-    // Using digits[0..3] creates a slice (&[u8]), which is then cloned into a new Vec.
+    // 3. Take a slice of the first 3 elements and convert it back to a Vec<u32>.
+    // Using digits[0..3] creates a slice (&[u32]), which is then cloned into a new Vec.
     digits[0..3].to_vec()
 }
 
-/// Converts a 3-digit string into a Vector of its individual digits (u8).
+/// Converts a 3-digit string into a Vector of its individual digits (u32).
 ///
 /// Example: "132" -> [1, 3, 2]
 ///
@@ -78,18 +83,17 @@ pub fn generate_unique_digits() -> Vec<u8> {
 /// * `input_str` - A reference to the 3-digit string.
 ///
 /// # Returns
-/// A `Vec<u8>` containing the three digits.
-pub fn string_to_digit_vec(input_str: &str) -> Vec<u8> {
+/// A `Vec<u32>` containing the three digits.
+pub fn string_to_digit_vec(input_str: &str) -> Vec<u32> {
     input_str
         // Iterate over the characters of the string
         .chars()
         // Convert each character digit (e.g., '1') to a numeric digit (e.g., 1)
         .map(|c| {
-            // c.to_digit(10) returns an Option<u32>. Since we are guaranteed 
-            // valid digits, we can safely unwrap and cast to u8.
-            c.to_digit(10).expect("Input must contain only valid digits 0-9") as u8
+            // c.to_digit(10) returns an Option<u32>. 
+            c.to_digit(10).expect("Input must contain only valid digits 0-9")
         })
-        // Collect the results into a new Vector of u8
+        // Collect the results into a new Vector of u32
         .collect()
 }
 
