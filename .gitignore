@@ -15,3 +15,5 @@ target/
 
 # Sometimes, this output is useful.
 a.out
+*~
+*#
