@@ -48,3 +48,6 @@ if let Some(max) = config_max {
 	println!("The maximum is configured to be {max}");
 }
 ```
+
+`if let ... else` is also possible.
+
