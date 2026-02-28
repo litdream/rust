@@ -15,13 +15,11 @@ fn main() {
 
 use std::fmt::Display;
 
-fn longest_with_an_announcement<'a, T>(
+fn longest_with_an_announcement<'a, T:Display>(
     x: &'a str,
     y: &'a str,
     ann: T,
 ) -> &'a str
-where
-    T: Display,
 {
     println!("Announcement! {ann}");
     if x.len() > y.len() { x } else { y }
