@@ -1,12 +1,11 @@
 use std::env;
-use std::io;
-use std::io::BufReader;
+use std::io::{self, BufRead}; // Added BufRead trait
+use std::fs::File;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let config = parse_config(&args);
-
-    print_grep(&config)
+    print_grep(&config);
 }
 
 struct Config {
@@ -23,11 +22,14 @@ fn parse_config(args: &[String]) -> Config {
     Config { query, path }
 }
 
-
 fn print_grep(config: &Config) {
-    let reader = io::BufReader::new(&config.path);
+    let fileobj = File::open(&config.path).expect("Failed to open file");
+    let reader = io::BufReader::new(fileobj);
+
     for line in reader.lines() {
-        let l = line?;
-        println!("{}", l);
+        let line_content = line.expect("Failed to read line");
+        if line_content.contains(&config.query) {
+            println!("{}: {}", &config.path, line_content);
+        }
     }
 }
