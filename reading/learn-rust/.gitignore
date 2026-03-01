@@ -2,3 +2,5 @@ Cargo.lock
 Cargo.toml
 target/
 .#*
+.idea
+

@@ -11,3 +11,8 @@ some collection of documents
   - [env::args().collect() -> <B>](https://doc.rust-lang.org/std/env/struct.Args.html#method.collect)
     - https://doc.rust-lang.org/src/core/iter/traits/iterator.rs.html#2015-2017  
 
+
+^This kind of analysis helps to understand Rust convention.
+
+Finished reading Ch12.
+Make [my own minigrep](minigrep)
