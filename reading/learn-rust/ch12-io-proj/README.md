@@ -16,3 +16,7 @@ some collection of documents
 
 Finished reading Ch12.
 Make [my own minigrep](minigrep)
+
+
+Reading file line-by-line isn't straightforward as other languages do.
+
