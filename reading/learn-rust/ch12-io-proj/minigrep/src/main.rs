@@ -1,10 +1,11 @@
 use std::env;
-use std::io::{self, BufRead}; // Added BufRead trait
 use std::fs::File;
+use std::io::{self, BufRead}; // Added BufRead trait
 
 fn main() {
     let args: Vec<String> = env::args().collect();
     let config = parse_config(&args);
+
     print_grep(&config);
 }
 
@@ -27,7 +28,9 @@ fn print_grep(config: &Config) {
     let reader = io::BufReader::new(fileobj);
 
     for line in reader.lines() {
-        let line_content = line.expect("Failed to read line");
+        let line_content = line.expect("Failed to read line"); // unwrap the io::Result<String>
+
+        // String.contains()  -- note in README.md
         if line_content.contains(&config.query) {
             println!("{}: {}", &config.path, line_content);
         }
