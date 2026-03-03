@@ -1,10 +1,14 @@
 use std::env;
 use std::fs::File;
-use std::io::{self, BufRead}; // Added BufRead trait
+use std::io::{self, BufRead};
+use std::process; // Added BufRead trait
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let config = Config::new(&args);
+    let config = Config::build(&args).unwrap_or_else(|err| {
+        println!("Problem parsing args: {err}");
+        process::exit(1);
+    });
 
     print_grep(&config);
 }
@@ -15,13 +19,13 @@ struct Config {
 }
 
 impl Config {
-    fn new(args: &[String]) -> Config {
-        if args.len() < 2 {
-            panic!("Not enough arguments");
+    fn build(args: &[String]) -> Result<Config, &'static str> {
+        if args.len() < 3 {
+            return Err("not enough args!");
         }
         let query = args[1].clone();
         let path = args[2].clone();
-        Config { query, path }
+        Ok(Config { query, path })
     }
 }
 

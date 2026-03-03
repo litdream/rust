@@ -106,3 +106,5 @@ struct + new()  seems to be a good candiate for a constructor.
   - NOTE: rust constructor using `impl` can't use &self, yet.
   - Mostly returns new Object.   In our case `Config { a, b}` is the best.
   
+Lvl 2:  build and return an Result for unwrap.
+
