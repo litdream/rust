@@ -6,6 +6,8 @@
 
 some collection of documents
 
+
+
 ### args to Vector
 
 [std::env](https://doc.rust-lang.org/std/env/index.html)
@@ -19,6 +21,8 @@ some collection of documents
 
 Finished reading Ch12.
 Make [my own minigrep](minigrep)
+
+
 
 
 ### File handling
@@ -92,3 +96,13 @@ where
 ```
 - [Pattern](https://doc.rust-lang.org/std/str/pattern/trait.Pattern.html)
   - std::str::pattern:   Trait Pattern:
+
+
+
+
+### Constructor
+
+struct + new()  seems to be a good candiate for a constructor.
+  - NOTE: rust constructor using `impl` can't use &self, yet.
+  - Mostly returns new Object.   In our case `Config { a, b}` is the best.
+  

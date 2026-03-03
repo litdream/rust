@@ -4,7 +4,7 @@ use std::io::{self, BufRead}; // Added BufRead trait
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    let config = parse_config(&args);
+    let config = Config::new(&args);
 
     print_grep(&config);
 }
@@ -14,13 +14,15 @@ struct Config {
     path: String,
 }
 
-fn parse_config(args: &[String]) -> Config {
-    if args.len() < 2 {
-        panic!("Not enough arguments");
+impl Config {
+    fn new(args: &[String]) -> Config {
+        if args.len() < 2 {
+            panic!("Not enough arguments");
+        }
+        let query = args[1].clone();
+        let path = args[2].clone();
+        Config { query, path }
     }
-    let query = args[1].clone();
-    let path = args[2].clone();
-    Config { query, path }
 }
 
 fn print_grep(config: &Config) {
