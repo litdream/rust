@@ -2,6 +2,7 @@ use std::env;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::process; // Added BufRead trait
+use std::error::Error;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -10,7 +11,10 @@ fn main() {
         process::exit(1);
     });
 
-    print_grep(&config);
+    if let Err(e) = print_grep(&config) {
+	println!("Application error: {e}");
+	process::exit(2);
+    }
 }
 
 struct Config {
@@ -29,16 +33,22 @@ impl Config {
     }
 }
 
-fn print_grep(config: &Config) {
+fn print_grep(config: &Config) -> Result<(), Box<dyn Error>> {
     let fileobj = File::open(&config.path).expect("Failed to open file");
     let reader = io::BufReader::new(fileobj);
 
     for line in reader.lines() {
-        let line_content = line.expect("Failed to read line"); // unwrap the io::Result<String>
+        // unwrap the io::Result<String>
+        //   - if made error, it returns Err() object.
+        //   - Box<dyn Error> will be covered later.  So far, just accept it.
+        //
+        let line_content = line.expect("Failed to read line");
 
         // String.contains()  -- note in README.md
         if line_content.contains(&config.query) {
             println!("{}: {}", &config.path, line_content);
         }
     }
+
+    Ok(())
 }
