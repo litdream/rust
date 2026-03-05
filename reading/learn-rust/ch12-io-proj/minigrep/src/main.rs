@@ -1,8 +1,8 @@
 use std::env;
+use std::error::Error;
 use std::fs::File;
 use std::io::{self, BufRead};
 use std::process; // Added BufRead trait
-use std::error::Error;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -12,14 +12,15 @@ fn main() {
     });
 
     if let Err(e) = print_grep(&config) {
-	println!("Application error: {e}");
-	process::exit(2);
+        println!("Application error: {e}");
+        process::exit(2);
     }
 }
 
 struct Config {
     query: String,
     path: String,
+    ignore_case: bool,
 }
 
 impl Config {
@@ -27,9 +28,16 @@ impl Config {
         if args.len() < 3 {
             return Err("not enough args!");
         }
+
         let query = args[1].clone();
         let path = args[2].clone();
-        Ok(Config { query, path })
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
+
+        Ok(Config {
+            query,
+            path,
+            ignore_case,
+        })
     }
 }
 
@@ -45,9 +53,16 @@ fn print_grep(config: &Config) -> Result<(), Box<dyn Error>> {
         let line_content = line.expect("Failed to read line");
 
         // String.contains()  -- note in README.md
-        if line_content.contains(&config.query) {
-            println!("{}: {}", &config.path, line_content);
-        }
+        if config.ignore_case {
+            let query = config.query.to_lowercase();
+            if line_content.to_lowercase().contains(&query) {
+                println!("{}: {}", &config.path, line_content);
+            }
+        } else {
+            if line_content.contains(&config.query) {
+                println!("{}: {}", &config.path, line_content);
+            }
+        };
     }
 
     Ok(())

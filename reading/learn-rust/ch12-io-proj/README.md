@@ -105,6 +105,25 @@ where
 struct + new()  seems to be a good candiate for a constructor.
   - NOTE: rust constructor using `impl` can't use &self, yet.
   - Mostly returns new Object.   In our case `Config { a, b}` is the best.
-  
+
 Lvl 2:  build and return an Result for unwrap.
 
+
+
+
+### Environment Variable
+
+std::env::var(),  then `.is_ok()`
+
+https://doc.rust-lang.org/std/env/fn.var.html
+  - `pub fn var<K: AsRef<OsStr>>(key: K) -> Result<String, VarError>`
+    - Remember?   Result is:
+	  ```rust
+	  pub enum Result<T, E> {
+	      Ok(T),
+		  Err(E),
+	  }
+	  ```
+
+	  And, is_ok() is Result's method:  (returns bool)
+	  - https://doc.rust-lang.org/std/result/enum.Result.html#method.is_ok
